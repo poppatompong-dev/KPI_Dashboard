@@ -1,9 +1,9 @@
 # 📖 System Documentation: Smart City KPI Platform v3.2
 
 > **Smart City Municipal Performance Management System (AI-Driven)**
-> พัฒนาโดย: นักวิชาการคอมพิวเตอร์ เทศบาลนคร
-> VERSION: 3.2 (Performance Optimized)
-> UPDATED: 11/03/2026 20:00
+> VERSION: 3.2 (Performance Optimized + Security Hardened)
+> UPDATED: 11/03/2026 20:15
+> 📋 See: [RELEASE_NOTES_V3.md](./RELEASE_NOTES_V3.md) for full changelog
 
 ---
 
@@ -63,7 +63,7 @@ RBAC, Audit Logs, User Management
 |---|---|---|
 | **Trend Forecast** | Linear Regression (OLS) | พยากรณ์ผลงาน 3 เดือน |
 | **Risk Detection** | Z-Score & Target Gap | ตรวจ KPI วิกฤต |
-| **NLP Insights** | Thai Text Generation | สรุปผลภาษาไทย |
+| **AI Insights** | Rule-based Thai Text Generation | สรุปผลภาษาไทย |
 | **Scoring Engine** | Weighted Average | คะแนนรวมถ่วงน้ำหนัก |
 
 ---
@@ -76,17 +76,67 @@ RBAC, Audit Logs, User Management
 
 ---
 
-## 5. 🚀 Deployment
+## 5. ⚙️ First-time Setup (Quick Start)
 
-### Local
+สำหรับนักพัฒนาที่รับงานต่อ ทำตามขั้นตอนนี้เพื่อติดตั้งและรันระบบได้ทันที:
+
 ```bash
-npm run dev   # Vite dev server → http://localhost:5173
-npm test      # Unit tests
+# 1. Clone repository
+git clone https://github.com/poppatompong-dev/KPI_Dashboard
+cd KPI_Dashboard
+
+# 2. Install dependencies
+npm install
+
+# 3. Start local dev server
+npm run dev   # → http://localhost:5173
+
+# 4. Run unit tests
+npm test
 ```
 
-### Vercel
-1. Push → `https://github.com/poppatompong-dev/KPI_Dashboard`
-2. Import repo ใน Vercel Dashboard → Auto Deploy
+**ขั้นตอน Google Apps Script (Backend):**
+1. คัดลอกโค้ดจาก `apps-script/Deploy.gs`
+2. เปิด [Google Apps Script](https://script.google.com) → สร้าง project ใหม่
+3. วางโค้ด → คลิก **Deploy** → **New Deployment** → **Web App**
+4. ตั้งค่า **Who has access**: `Anyone`
+5. คัดลอก **Web App URL** ที่ได้รับ
+6. นำ URL ไปเพิ่มใน **Vercel Environment Variables** ชื่อ `GAS_URL`
+
+> [!CAUTION]
+> **GAS Web App URL ต้องไม่ถูก commit ลง public repository** เด็ดขาด
+> URL นี้ทำหน้าที่เป็น unauthenticated API endpoint — ผู้ที่มี URL สามารถ read/write ข้อมูลได้
+>
+> **จัดการ Local Development:**
+> ```bash
+> cp config.example.js config.js   # config.js ถูก gitignore แล้ว
+> # แก้ config.js ใส่ GAS URL จริงเข้าไป
+> ```
+> เพิ่ม `<script src="config.js"></script>` ใน HTML ที่ต้องการใช้ API (local only)
+>
+> **จัดการ Production (Vercel):**
+> Vercel Dashboard → Settings → Environment Variables → เพิ่ม `GAS_URL`
+
+**ขั้นตอน Google Sheets:**
+- สร้าง Google Sheet ใหม่ → Share กับ GAS Service Account
+- Sheet tabs ที่จำเป็น: `KPI_Master`, `KPI_Results`, `Departments`, `Users`
+- อย่าเปลี่ยน header แถวที่ 1 ของแต่ละ tab เพราะ GAS อ้างอิงตาม column name
+
+**System Owner / Contacts:**
+| ทรัพยากร | เจ้าของ / ขอสิทธิ์จาก |
+|---|---|
+| Google Sheet | นักวิชาการคอมพิวเตอร์ |
+| GAS Deployment | นักวิชาการคอมพิวเตอร์ |
+| Vercel Project | นักวิชาการคอมพิวเตอร์ |
+| GitHub Repository | poppatompong-dev |
+
+---
+
+## 6. 🚀 Deployment
+
+### Vercel (Production)
+1. Push code → GitHub `main` branch
+2. Vercel auto-deploys ทันที (zero-config)
 
 **Security Headers** (ผ่าน `vercel.json`):
 - `Strict-Transport-Security` (HSTS)
@@ -124,3 +174,7 @@ npm test      # Unit tests
 ## 🎖️ Developer Credits
 **นักวิชาการคอมพิวเตอร์** — กองยุทธศาสตร์และงบประมาณ เทศบาลนคร
 *"Transforming Municipal Data into Intelligent Decisions"*
+
+---
+
+📋 See also: [RELEASE_NOTES_V3.md](./RELEASE_NOTES_V3.md) for full version changelog

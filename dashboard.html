@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Director Dashboard — Smart City KPI Platform</title>
-  <meta name="description" content="แดชบอร์ดผู้อำนวยการ ผลการดำเนินงานรายสำนัก/กอง พร้อม AI วิเคราะห์ความเสี่ยงและแนวโน้ม">
+  <title>Executive Dashboard — Smart City KPI Platform</title>
+  <meta name="description" content="แดชบอร์ดผู้บริหาร ภาพรวมผลการดำเนินงานเมือง AI วิเคราะห์ประสิทธิภาพ ความเสี่ยง และยุทธศาสตร์">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -23,11 +23,11 @@
     </div>
     <nav class="sidebar__nav">
       <div class="sidebar__section-label">แดชบอร์ด</div>
-      <a href="dashboard.html" class="sidebar__link">
+      <a href="dashboard.html" class="sidebar__link sidebar__link--active">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
         ผู้บริหาร (Executive)
       </a>
-      <a href="director.html" class="sidebar__link sidebar__link--active">
+      <a href="director.html" class="sidebar__link">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
         ผู้อำนวยการ (Director)
       </a>
@@ -55,7 +55,7 @@
     <div class="sidebar__footer">
       <div style="display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-bottom:0.25rem;">
         <div class="pulse-dot"></div>
-        <span style="font-size:0.7rem;color:rgb(255 255 255/.5);">Director View</span>
+        <span style="font-size:0.7rem;color:rgb(255 255 255/.5);">AI Analysis Active</span>
       </div>
       Smart City KPI Platform v3.0
     </div>
@@ -68,81 +68,99 @@
         <button class="top-header__mobile-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
           <svg style="width:1.5rem;height:1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
-        <h1 class="top-header__title">🏢 <span id="deptTitle"></span></h1>
+        <h1 class="top-header__title">🏛️ Executive Dashboard — ภาพรวมเมือง</h1>
       </div>
       <div class="top-header__actions">
-        <select class="filter-bar__select" id="deptSelector" style="min-width:180px;"></select>
-        <select class="filter-bar__select" id="filterMonth" style="min-width:80px;"></select>
+        <select class="filter-bar__select" id="filterMonth" style="min-width:100px;"></select>
+        <select class="filter-bar__select" id="filterYear"></select>
       </div>
     </header>
 
     <div class="content-body" id="mainContent">
       <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
-        <p class="loading-overlay__text">กำลังวิเคราะห์ข้อมูลสำนัก/กอง...</p>
+        <p class="loading-overlay__text">🤖 AI กำลังวิเคราะห์ข้อมูล...</p>
       </div>
 
-      <!-- ─── Department Summary Cards ─── -->
-      <div class="stats-grid" id="deptSummaryCards"></div>
+      <!-- ─── Summary Cards ─── -->
+      <div class="stats-grid" id="summaryCards"></div>
 
-      <!-- ─── AI Director Insights ─── -->
+      <!-- ─── AI Insights ─── -->
       <div class="chart-card" style="margin-bottom:var(--space-xl);">
         <div class="chart-card__header">
-          <h2 class="chart-card__title">🤖 AI สรุปผลการดำเนินงาน</h2>
-          <span class="badge badge--green" style="font-size:0.65rem;"><span class="badge__dot"></span>AI Analysis</span>
+          <h2 class="chart-card__title">🤖 AI Performance Insights</h2>
+          <span class="badge badge--green" style="font-size:0.65rem;"><span class="badge__dot"></span>Auto-generated</span>
         </div>
-        <div id="directorInsights"></div>
+        <div id="aiInsights"></div>
       </div>
 
-      <!-- ─── Charts: Trend + Status ─── -->
+      <!-- ─── Charts Row ─── -->
       <div class="charts-grid">
         <div class="chart-card">
-          <div class="chart-card__header"><h2 class="chart-card__title">📈 แนวโน้มผลงานสำนัก/กอง</h2></div>
-          <div class="chart-card__canvas-wrap chart-card__canvas-wrap--trend"><canvas id="deptTrendChart"></canvas></div>
+          <div class="chart-card__header"><h2 class="chart-card__title">📈 แนวโน้มผลการดำเนินงาน (Average Score)</h2></div>
+          <div class="chart-card__canvas-wrap chart-card__canvas-wrap--trend"><canvas id="trendChart"></canvas></div>
         </div>
         <div class="chart-card">
-          <div class="chart-card__header"><h2 class="chart-card__title">📊 สถานะ KPI</h2></div>
-          <div class="chart-card__canvas-wrap chart-card__canvas-wrap--pie"><canvas id="deptStatusChart"></canvas></div>
+          <div class="chart-card__header"><h2 class="chart-card__title">📊 สถานะ KPI ทั้งเมือง</h2></div>
+          <div class="chart-card__canvas-wrap chart-card__canvas-wrap--pie"><canvas id="statusChart"></canvas></div>
         </div>
       </div>
 
-      <!-- ─── Risk Alerts + Top/Bottom ─── -->
-      <div class="section-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+      <!-- ─── Strategy + Risk ─── -->
+      <div class="section-grid">
+        <!-- Strategy Progress -->
+        <div class="chart-card">
+          <div class="chart-card__header"><h2 class="chart-card__title">🎯 ความก้าวหน้ายุทธศาสตร์</h2></div>
+          <div id="strategyProgress"></div>
+        </div>
         <!-- Risk Alerts -->
         <div class="chart-card">
-          <div class="chart-card__header"><h2 class="chart-card__title">⚠️ KPI ที่ต้องเฝ้าระวัง</h2></div>
-          <div id="directorRiskAlerts" style="max-height:280px;overflow-y:auto;"></div>
-        </div>
-        <!-- Top KPIs -->
-        <div class="chart-card">
-          <div class="chart-card__header"><h2 class="chart-card__title">🏆 KPI ดีเด่น</h2></div>
-          <div id="directorTopKpis"></div>
-        </div>
-        <!-- Bottom KPIs -->
-        <div class="chart-card">
-          <div class="chart-card__header"><h2 class="chart-card__title">📋 KPI ต้องพัฒนา</h2></div>
-          <div id="directorBottomKpis"></div>
+          <div class="chart-card__header">
+            <h2 class="chart-card__title">⚠️ Risk Alerts</h2>
+            <span class="badge badge--yellow" style="font-size:0.65rem;"><span class="badge__dot"></span>AI Detected</span>
+          </div>
+          <div id="riskAlerts" style="max-height:320px;overflow-y:auto;"></div>
         </div>
       </div>
 
-      <!-- ─── KPI Detail Table ─── -->
+      <!-- ─── Risk Heatmap ─── -->
+      <div class="chart-card" style="margin-bottom:var(--space-xl);">
+        <div class="chart-card__header"><h2 class="chart-card__title">🗺️ Risk Heatmap — แผนที่ความเสี่ยงรายหน่วยงาน</h2></div>
+        <div class="heatmap-grid" id="riskHeatmap"></div>
+      </div>
+
+      <!-- ─── Top / Bottom KPIs ─── -->
+      <div class="section-grid">
+        <div class="chart-card">
+          <div class="chart-card__header"><h2 class="chart-card__title">🏆 Top 5 KPIs</h2></div>
+          <div id="topKpis"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card__header"><h2 class="chart-card__title">📉 Bottom 5 KPIs</h2></div>
+          <div id="bottomKpis"></div>
+        </div>
+      </div>
+
+      <!-- ─── Department Ranking Table ─── -->
       <div class="table-card">
         <div class="table-card__header">
-          <h2 class="table-card__title">📋 รายละเอียดตัวชี้วัด</h2>
+          <h2 class="table-card__title">🏢 การจัดอันดับหน่วยงาน (Department Ranking)</h2>
         </div>
         <div class="responsive-table">
           <table class="kpi-table">
             <thead>
               <tr>
-                <th>ชื่อตัวชี้วัด (KPI)</th>
-                <th class="text-right">เป้าหมาย</th>
-                <th class="text-right">ผลงานจริง</th>
+                <th>#</th>
+                <th>หน่วยงาน</th>
+                <th class="text-center">KPI ทั้งหมด</th>
+                <th class="text-center">สำเร็จ</th>
+                <th class="text-center">เฝ้าระวัง</th>
+                <th class="text-center">ต้องปรับปรุง</th>
                 <th>คะแนน</th>
-                <th class="text-center">สถานะ</th>
-                <th class="text-center">แนวโน้ม</th>
+                <th class="text-center">ความเสี่ยง</th>
               </tr>
             </thead>
-            <tbody id="directorKpiTable"></tbody>
+            <tbody id="deptRanking"></tbody>
           </table>
         </div>
       </div>
@@ -169,7 +187,7 @@
   <script src="assets/js/api.js"></script>
   <script src="assets/js/charts.js"></script>
   <script src="assets/js/nav.js"></script>
-  <script src="assets/js/director.js"></script>
+  <script src="assets/js/executive.js"></script>
 </body>
 </html>
 

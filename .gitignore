@@ -1,0 +1,19 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Environment variables — ห้าม commit ขึ้น repository เด็ดขาด
+.env
+.env.local
+.env.production
+
+# Local GAS URL config — copy from config.example.js แล้วใส่ URL จริง
+config.js
+
+# Vite build
+dist/
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -3,7 +3,7 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 // In Node environment, these files are treated as CJS due to the module.exports check we added
-const ScoringEngine = require('../js/scoring.js');
+const ScoringEngine = require('../assets/js/scoring.js');
 
 describe('ScoringEngine', () => {
   describe('calculateKpiScore', () => {

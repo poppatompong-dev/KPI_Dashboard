@@ -3,10 +3,10 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 // Mock the global ScoringEngine that AIEngine depends on
-const ScoringEngine = require('../js/scoring.js');
+const ScoringEngine = require('../assets/js/scoring.js');
 global.ScoringEngine = ScoringEngine;
 
-const AIEngine = require('../js/ai-engine.js');
+const AIEngine = require('../assets/js/ai-engine.js');
 
 describe('AIEngine', () => {
   describe('linearRegression', () => {
