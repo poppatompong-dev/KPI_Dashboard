@@ -1,117 +1,126 @@
-# 📖 System Documentation: Smart City KPI Platform v3.1
+# 📖 System Documentation: Smart City KPI Platform v3.2
 
 > **Smart City Municipal Performance Management System (AI-Driven)**
 > พัฒนาโดย: นักวิชาการคอมพิวเตอร์ เทศบาลนคร
-> VERSION: 3.1 (Stable)
-> UPDATED: 11/03/2026 19:45
+> VERSION: 3.2 (Performance Optimized)
+> UPDATED: 11/03/2026 20:00
 
 ---
 
 ## 1. 🏗️ System Architecture
 
-ระบบถูกออกแบบให้เป็น **Serverless Web Application** โดยใช้โครงสร้างพื้นฐานของ Google Workspace:
-
-- **Frontend**: HTML5, Vanilla CSS3 (Custom Design System v2), JavaScript (ES6+)
-- **Backend/API**: Google Apps Script (Deployment via Web App URL)
+- **Frontend**: HTML5, Vanilla CSS3 (Custom Design System), JavaScript (ES6+)
+- **Backend/API**: Google Apps Script (Web App URL)
 - **Database**: Google Sheets (Cloud Storage)
-- **AI Engine**: Client-side JavaScript Processing (Statistical Logic & NLP)
-- **Testing**: Vitest Unit Test Suite (15 tests covering ScoringEngine & AIEngine)
-- **Hosting**: Static Site — รองรับ Vercel Deployment (`vercel.json`)
+- **AI Engine**: Client-side JavaScript (Statistical Logic & NLP)
+- **Testing**: Vitest — 15/15 Unit Tests Passing
+- **Hosting**: Vercel (Static Site) — `vercel.json` configured
 
-### Data Flow Diagram
+### Data Flow
 ```mermaid
 graph TD
-    User((User)) -->|Browser| UI[Frontend: Dashboards/Reports]
+    User((User)) -->|Browser| UI[Landing Page + Dashboards]
     UI -->|API Call| GAS[Google Apps Script]
     GAS -->|CRUD| GS[(Google Sheets)]
-    UI -->|Local Process| AI[AI Engine: ai-engine.js/scoring.js]
+    UI -->|Local| AI[ai-engine.js / scoring.js]
     AI -->|Insights| UI
 ```
 
 ---
 
-## 2. 🖥️ Interface & Key Features
+## 2. 🖥️ Interface & Features
 
-### 🏠 Landing Page (Home) — v3.1 Redesign
-หน้าแรกใหม่ออกแบบด้วย **Dark Glassmorphism UI** รองรับ Mobile Responsive ทุกขนาดจอ (400px–1920px+)
-- Dark background `#0a0c14` พร้อม Ambient Light Effects (Blur blobs)
-- 4 Role Cards พร้อม Hover glow effects และ micro-animations
-- Admin Back-Office Card แบบ Full-Width Gradient Border
-- Animated ping indicator แสดงสถานะระบบ Online
+### 🏠 Landing Page — v3.2 (Lighthouse Optimized)
+**Dark Glassmorphism UI** รองรับทุกหน้าจอ (400px–1920px+)
+- Non-blocking Google Fonts (FCP optimization)
+- GPU-composited background blobs (`will-change: transform`)
+- Semantic landmarks: `<main>`, `<nav>`, `<header>`, `<footer>`
+- Heading hierarchy: `h1` → `h2` (ไม่ข้ามระดับ)
+- Skip link สำหรับ keyboard / screen-reader users
+- Focus-visible styles ครบทุก interactive element
+- `aria-hidden` บน decorative SVGs
+- `prefers-reduced-motion` animation support
+- Open Graph + Twitter Card meta
+- JSON-LD Structured Data (WebApplication schema)
 
 ### 📊 Executive Dashboard
-แสดงภาพรวมความสำเร็จของเมืองรายยุทธศาสตร์ พร้อม AI Performance Insights สรุปผลงานเป็นข้อความภาษาไทย
+แสดงภาพรวมความสำเร็จของเมืองรายยุทธศาสตร์ พร้อม AI Performance Insights ภาษาไทย
 
 ### 🧠 Intelligent Reports (AI-Driven)
-ระบบรายงานที่คำนวณความเสี่ยงล่วงหน้า โดยใช้หลักการทางสถิติเพื่อตรวจจับตัวชี้วัดที่วิกฤต
+ระบบรายงานตรวจจับ KPI วิกฤต ด้วย Linear Regression และ Z-Score Analysis
 
 ### 📘 User Manual
-คู่มือการใช้งานแบบ Built-in ช่วยให้ผู้ใช้งานใหม่เริ่มต้นได้รวดเร็ว แบ่งตามบทบาทงาน
+คู่มือการใช้งาน Built-in รองรับทุกบทบาท
 
 ### 🔐 Admin Back-Office
-ส่วนจัดการความปลอดภัยและการตั้งค่าระบบ (RBAC, Audit Logs, User Management)
+RBAC, Audit Logs, User Management
 
 ---
 
-## 3. 🧠 Smart Capabilities (AI & Logic)
+## 3. 🧠 Smart Capabilities
 
-| Feature | Technical Implementation | Goal |
-|---------|-------------------------|------|
-| **Trend Forecast** | Linear Regression (Ordinary Least Squares) | พยากรณ์ผลงานในอีก 3 เดือนข้างหน้า |
-| **Risk Detection** | Z-Score & Target Gap Analysis | ตรวจพบ KPI ที่มีโอกาสไม่บรรลุเป้าหมาย |
-| **NLP Insights** | Context-aware Thai Text Generation | แปลงตัวเลขให้เป็นข้อสรุปที่ผู้บริหารอ่านเข้าใจง่าย |
-| **Scoring Engine** | Weighted Average & Status Mapping | คำนวณคะแนนรวมเมืองโดยถ่วงน้ำหนักตามความสำคัญ |
+| Feature | Implementation | Goal |
+|---|---|---|
+| **Trend Forecast** | Linear Regression (OLS) | พยากรณ์ผลงาน 3 เดือน |
+| **Risk Detection** | Z-Score & Target Gap | ตรวจ KPI วิกฤต |
+| **NLP Insights** | Thai Text Generation | สรุปผลภาษาไทย |
+| **Scoring Engine** | Weighted Average | คะแนนรวมถ่วงน้ำหนัก |
 
 ---
 
-## 4. 🧪 Testing Infrastructure
+## 4. 🧪 Testing
 
-| Tool | Command | Coverage |
-|------|---------|----------|
-| **Vitest** | `npm test` | ScoringEngine (9 tests), AIEngine (6 tests) — **15/15 Pass** |
-
-ไฟล์ทดสอบ: `tests/scoring.test.js`, `tests/ai-engine.test.js`
+| Tool | Command | Status |
+|---|---|---|
+| **Vitest** | `npm test` | ✅ 15/15 Pass |
 
 ---
 
 ## 5. 🚀 Deployment
 
-### Local Development
+### Local
 ```bash
 npm run dev   # Vite dev server → http://localhost:5173
-npm test      # Run unit tests
+npm test      # Unit tests
 ```
 
-### Vercel Deployment
-โปรเจคพร้อม Deploy ขึ้น Vercel ทันที ผ่านไฟล์ `vercel.json`
-1. Push โค้ดขึ้น GitHub: `https://github.com/poppatompong-dev/KPI_Dashboard`
-2. Import repo เข้า Vercel Dashboard
-3. Deploy — ไม่ต้องตั้งค่าเพิ่มเติม (Static Site)
+### Vercel
+1. Push → `https://github.com/poppatompong-dev/KPI_Dashboard`
+2. Import repo ใน Vercel Dashboard → Auto Deploy
 
-### Google Apps Script (Backend)
-1. คัดลอกโค้ดจากไฟล์ `apps-script/Deploy.gs`
-2. นำไปวางใน Google Apps Script Editor
-3. คลิก **Deploy** > **New Deployment** > **Web App**
-4. ตั้งค่า **Who has access** เป็น **"Anyone"**
-5. อัปเดต URL ใน `js/api.js`
+**Security Headers** (ผ่าน `vercel.json`):
+- `Strict-Transport-Security` (HSTS)
+- `X-Frame-Options: SAMEORIGIN`
+- `Cross-Origin-Opener-Policy: same-origin`
+- `X-Content-Type-Options: nosniff`
+- Cache-Control: CSS/JS immutable, HTML must-revalidate
+
+### SEO Files
+- `/robots.txt` — Allow all crawlers
+- `/sitemap.xml` — All major pages indexed
 
 ---
 
-## 6. 🛠️ Maintenance Guide
+## 6. ⚡ Lighthouse Optimization Summary
 
-1. **Google Sheet**: อย่าเปลี่ยนชื่อหัวตาราง (Header) ในแถวที่ 1 ของแต่ละ Sheet
-2. **GAS Deployment**: ทุกครั้งที่มีการแก้ไข `Deploy.gs` ให้เลือก "New Deployment"
-3. **Styles**: แก้ไข `css/styles.css` (CSS Variables ใน `:root`) หรือ `<style>` ใน `index.html` สำหรับ Landing Page Theme
-4. **Landing Page Links**: ทุก Role Card ลิงค์ไปยังไฟล์ `.html` ในโฟลเดอร์ราก อย่าเปลี่ยนชื่อไฟล์
+| Dimension | Key Fixes Applied |
+|---|---|
+| **Performance** | Non-blocking fonts, GPU blobs, CSS preload, reduced-motion |
+| **Accessibility** | Skip link, landmarks, heading order, focus-visible, aria-hidden, contrast |
+| **Best Practices** | HSTS, X-Frame-Options, COOP, Cache-Control headers |
+| **SEO** | canonical, robots.txt, sitemap.xml, JSON-LD, OG tags |
 
-### สิ่งที่สามารถต่อยอดได้
-- เชื่อมต่อ Line Notify สำหรับส่งรายงานความเสี่ยงรายวัน
-- เพิ่มระบบ OCR สำหรับอ่านค่าจากเอกสารรูปภาพเข้าสู่ระบบโดยอัตโนมัติ
-- เชื่อมต่อกับ Chat API เพื่อทำ Dynamic Q&A เกี่ยวกับข้อมูล KPI
+---
+
+## 7. 🛠️ Maintenance
+
+1. **Google Sheet**: อย่าเปลี่ยน Header แถว 1
+2. **GAS**: ทุกครั้งที่แก้ไข `Deploy.gs` → "New Deployment"
+3. **Landing CSS**: แก้ใน `<style>` ใน `index.html`
+4. **Links**: ห้ามเปลี่ยนชื่อไฟล์ `.html` ในโฟลเดอร์ราก
 
 ---
 
 ## 🎖️ Developer Credits
-**นักวิชาการคอมพิวเตอร์**
-*กองยุทธศาสตร์และงบประมาณ เทศบาลนคร*
+**นักวิชาการคอมพิวเตอร์** — กองยุทธศาสตร์และงบประมาณ เทศบาลนคร
 *"Transforming Municipal Data into Intelligent Decisions"*

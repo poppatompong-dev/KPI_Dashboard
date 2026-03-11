@@ -4,12 +4,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart City KPI Platform — เทศบาลนคร</title>
-  <meta name="description" content="ระบบจัดการผลการดำเนินงาน KPI อัจฉริยะ สำหรับเทศบาลนคร พร้อมวิเคราะห์ AI และแดชบอร์ดผู้บริหาร">
+  <meta name="description" content="ระบบจัดการผลการดำเนินงาน KPI อัจฉริยะ สำหรับเทศบาลนคร พร้อมวิเคราะห์ด้วย AI แดชบอร์ดผู้บริหาร และรายงานอัจฉริยะ">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0a0c14">
+  <link rel="canonical" href="https://kpi-dashboard-wheat-nine.vercel.app/">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kpi-dashboard-wheat-nine.vercel.app/">
+  <meta property="og:title" content="Smart City KPI Platform — เทศบาลนคร">
+  <meta property="og:description" content="ระบบจัดการผลการดำเนินงาน KPI อัจฉริยะ AI วิเคราะห์แนวโน้มและความเสี่ยง">
+  <meta property="og:locale" content="th_TH">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Smart City KPI Platform">
+  <meta name="twitter:description" content="ระบบจัดการผลการดำเนินงาน KPI อัจฉริยะ สำหรับเทศบาลนคร">
+
+  <!-- Fonts: non-render-blocking -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap"></noscript>
+
+  <!-- CSS: preload for faster discovery, link for load -->
+  <link rel="preload" as="style" href="css/styles.css">
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Smart City KPI Platform",
+    "description": "ระบบจัดการผลการดำเนินงาน KPI อัจฉริยะ สำหรับเทศบาลนคร",
+    "url": "https://kpi-dashboard-wheat-nine.vercel.app/",
+    "applicationCategory": "BusinessApplication",
+    "inLanguage": "th",
+    "author": {
+      "@type": "Person",
+      "name": "นักวิชาการคอมพิวเตอร์",
+      "worksFor": { "@type": "GovernmentOrganization", "name": "เทศบาลนคร" }
+    }
+  }
+  </script>
+
   <style>
+    /* ── Visually hidden skip link ── */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 1rem;
+      z-index: 9999;
+      padding: 0.75rem 1.5rem;
+      background: #2563eb;
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      left: 1rem;
+      outline: 3px solid #60a5fa;
+      outline-offset: 2px;
+    }
+
     /* ── Landing v2 — Dark Glassmorphism ── */
     body.landing-v2 {
       background: #0a0c14;
@@ -17,6 +76,7 @@
       overflow-x: hidden;
       display: block;
       min-height: 100vh;
+      font-family: 'Prompt', 'Inter', system-ui, sans-serif;
     }
 
     /* Background ambient blobs */
@@ -30,7 +90,9 @@
     .lv2-bg__blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(120px);
+      filter: blur(100px);
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
     }
     .lv2-bg__blob--1 { top: -10%; left: -10%; width: 40%; height: 40%; background: rgba(37,99,235,0.10); }
     .lv2-bg__blob--2 { top: 20%; right: -5%; width: 30%; height: 30%; background: rgba(139,92,246,0.10); }
@@ -77,11 +139,11 @@
       background-clip: text;
       margin-bottom: 1rem;
     }
-    .lv2-header__title span { -webkit-text-fill-color: #3b82f6; }
+    .lv2-header__title span { -webkit-text-fill-color: #60a5fa; }
     .lv2-header__subtitle {
       font-size: 1.15rem;
       font-weight: 300;
-      color: #64748b;
+      color: #94a3b8;
       letter-spacing: 0.02em;
     }
     .lv2-header__divider {
@@ -91,6 +153,19 @@
       background: linear-gradient(to right, transparent, #3b82f6, transparent);
       border-radius: 9999px;
       opacity: 0.5;
+    }
+
+    /* Section heading (visually hidden, for accessibility) */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border-width: 0;
     }
 
     /* ── Card Grid ── */
@@ -126,6 +201,13 @@
       border-color: rgba(255,255,255,0.12);
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
+    /* Accessible focus styles */
+    .lv2-card:focus-visible,
+    .lv2-admin:focus-visible {
+      outline: 3px solid #60a5fa;
+      outline-offset: 3px;
+      border-radius: 1.75rem;
+    }
 
     /* Card inner glow on hover */
     .lv2-card__glow {
@@ -135,8 +217,9 @@
       border-radius: inherit;
       transition: opacity 0.5s ease;
       filter: blur(60px);
-      transform: scale(0.5);
+      transform: scale(0.5) translate3d(0,0,0);
       z-index: -1;
+      will-change: opacity;
     }
     .lv2-card:hover .lv2-card__glow { opacity: 1; }
     .lv2-card--purple .lv2-card__glow { background: linear-gradient(135deg,#8b5cf6,#4f46e5); }
@@ -152,6 +235,7 @@
       margin-bottom: 1.5rem;
       transition: transform 0.4s ease;
       width: fit-content;
+      will-change: transform;
     }
     .lv2-card:hover .lv2-card__icon { transform: scale(1.1) rotate(3deg); }
     .lv2-card__icon svg { width: 2rem; height: 2rem; color: #fff; }
@@ -170,10 +254,10 @@
       margin-bottom: 0.35rem;
       opacity: 0.75;
     }
-    .lv2-card--purple .lv2-card__subtitle { color: #a78bfa; }
-    .lv2-card--blue   .lv2-card__subtitle { color: #60a5fa; }
-    .lv2-card--green  .lv2-card__subtitle { color: #34d399; }
-    .lv2-card--amber  .lv2-card__subtitle { color: #fbbf24; }
+    .lv2-card--purple .lv2-card__subtitle { color: #c4b5fd; }
+    .lv2-card--blue   .lv2-card__subtitle { color: #93c5fd; }
+    .lv2-card--green  .lv2-card__subtitle { color: #6ee7b7; }
+    .lv2-card--amber  .lv2-card__subtitle { color: #fcd34d; }
 
     .lv2-card__title {
       font-size: 1.4rem;
@@ -185,8 +269,8 @@
     .lv2-card:hover .lv2-card__title { color: #bfdbfe; }
 
     .lv2-card__desc {
-      font-size: 0.8rem;
-      color: #64748b;
+      font-size: 0.82rem;
+      color: #94a3b8;  /* improved contrast vs #64748b */
       line-height: 1.6;
       flex: 1;
     }
@@ -200,7 +284,7 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: #475569;
+      color: #64748b;
       transition: color 0.3s;
     }
     .lv2-card:hover .lv2-card__cta { color: #f1f5f9; }
@@ -232,9 +316,15 @@
       color: inherit;
       width: 100%;
       max-width: 760px;
+      display: block;
     }
     .lv2-admin:hover {
       background: linear-gradient(135deg, rgba(225,29,72,0.25), rgba(244,63,94,0.25));
+    }
+    .lv2-admin:focus-visible {
+      outline: 3px solid #f87171;
+      outline-offset: 3px;
+      border-radius: 2rem;
     }
     .lv2-admin__inner {
       background: rgba(15,17,26,0.85);
@@ -253,10 +343,11 @@
       background: linear-gradient(135deg,#e11d48,#f43f5e);
       box-shadow: 0 8px 24px rgba(225,29,72,0.4);
       transition: transform 0.4s;
+      will-change: transform;
     }
     .lv2-admin:hover .lv2-admin__icon { transform: rotate(12deg); }
     .lv2-admin__icon svg { width: 2rem; height: 2rem; color: #fff; }
-    .lv2-admin__text h3 {
+    .lv2-admin__text h2 {
       font-size: 1.2rem;
       font-weight: 700;
       color: #f1f5f9;
@@ -264,7 +355,7 @@
     }
     .lv2-admin__text p {
       font-size: 0.82rem;
-      color: #64748b;
+      color: #94a3b8;
       max-width: 420px;
       line-height: 1.5;
     }
@@ -323,15 +414,15 @@
     }
     .lv2-footer__version {
       font-size: 0.7rem;
-      color: #334155;
+      color: #94a3b8; /* improved contrast */
       text-transform: uppercase;
       letter-spacing: 0.15em;
     }
-    .lv2-footer__credit { font-size: 0.8rem; color: #334155; margin-bottom: 0.3rem; }
+    .lv2-footer__credit { font-size: 0.8rem; color: #64748b; margin-bottom: 0.3rem; }
     .lv2-footer__credit span { color: #94a3b8; font-weight: 500; }
     .lv2-footer__slogan {
       font-size: 0.65rem;
-      color: #1e293b;
+      color: #475569; /* improved contrast */
       text-transform: uppercase;
       letter-spacing: 0.2em;
     }
@@ -341,6 +432,7 @@
       position: relative;
       width: 0.75rem;
       height: 0.75rem;
+      flex-shrink: 0;
     }
     .lv2-ping__ring {
       position: absolute;
@@ -367,16 +459,21 @@
       50%       { transform: scale(1.6); opacity: 0; }
     }
 
-    /* ── Responsive ── */
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .lv2-card, .lv2-header, .lv2-admin-wrap, .lv2-footer {
+        animation: none;
+      }
+      .lv2-card:hover { transform: none; }
+      .lv2-ping__ring { animation: none; }
+    }
 
-    /* Tablet landscape: 2-column grid */
+    /* ── Responsive ── */
     @media (max-width: 1024px) {
       .lv2-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
       .lv2-admin__badge { display: none; }
       .lv2-wrap { padding: 2.5rem 1.25rem 3rem; }
     }
-
-    /* Tablet portrait */
     @media (max-width: 768px) {
       .lv2-header { margin-bottom: 2.5rem; }
       .lv2-header__logo { width: 4rem; height: 4rem; }
@@ -391,24 +488,19 @@
       .lv2-footer { margin-top: 3.5rem; }
       .lv2-footer__pill { padding: 0.65rem 1.25rem; gap: 0.75rem; }
     }
-
-    /* Mobile */
     @media (max-width: 640px) {
       .lv2-wrap { padding: 2rem 1rem 3rem; }
       .lv2-grid { grid-template-columns: 1fr; gap: 0.875rem; }
       .lv2-header { margin-bottom: 2rem; }
       .lv2-header__title { font-size: clamp(1.75rem, 8vw, 2.5rem); letter-spacing: -0.02em; }
       .lv2-header__subtitle { font-size: 0.9rem; }
-      .lv2-card { padding: 1.25rem 1.25rem 1.25rem; border-radius: 1.25rem; }
+      .lv2-card { padding: 1.25rem; border-radius: 1.25rem; }
       .lv2-admin__inner { flex-direction: column; text-align: center; }
       .lv2-admin__badge { display: none; }
       .lv2-admin { max-width: 100%; }
       .lv2-admin__text p { margin: 0 auto; }
-      /* Disable heavy animations on mobile for performance */
       .lv2-card__glow { display: none; }
     }
-
-    /* Very small: 360px */
     @media (max-width: 400px) {
       .lv2-header__logo { width: 3.5rem; height: 3.5rem; margin-bottom: 1rem; }
       .lv2-card__cta { margin-top: 1rem; }
@@ -417,6 +509,9 @@
   </style>
 </head>
 <body class="landing-v2">
+
+  <!-- Skip link for keyboard / screen-reader users -->
+  <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
 
   <!-- Ambient Background -->
   <div class="lv2-bg" aria-hidden="true">
@@ -430,7 +525,7 @@
     <!-- Header -->
     <header class="lv2-header">
       <div class="lv2-header__logo" aria-hidden="true">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
         </svg>
       </div>
@@ -438,107 +533,113 @@
         Smart City <span>KPI</span> Platform
       </h1>
       <p class="lv2-header__subtitle">ระบบจัดการผลการดำเนินงานอัจฉริยะ — เทศบาลนคร</p>
-      <div class="lv2-header__divider"></div>
+      <div class="lv2-header__divider" aria-hidden="true"></div>
     </header>
 
-    <!-- Card Grid -->
-    <div class="lv2-grid" role="navigation" aria-label="เมนูหลัก">
+    <!-- Main Content -->
+    <main id="main-content">
+      <!-- Hidden heading for screen readers to announce section -->
+      <h2 class="sr-only">เมนูเลือกบทบาทผู้ใช้งาน</h2>
 
-      <!-- Executive -->
-      <a href="executive.html" class="lv2-card lv2-card--purple" id="roleExecutive" aria-label="ผู้บริหาร">
-        <div class="lv2-card__glow"></div>
-        <div class="lv2-card__icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-          </svg>
-        </div>
-        <p class="lv2-card__subtitle">Executive Dashboard</p>
-        <h3 class="lv2-card__title">ผู้บริหาร</h3>
-        <p class="lv2-card__desc">ภาพรวมเมือง · AI วิเคราะห์ ทุกสำนัก/กอง · ยุทธศาสตร์</p>
-        <div class="lv2-card__cta">
-          <span>เข้าสู่ระบบ</span>
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </div>
-      </a>
+      <!-- Card Grid -->
+      <nav class="lv2-grid" aria-label="เมนูหลักสำหรับแต่ละบทบาท">
 
-      <!-- Director -->
-      <a href="director.html" class="lv2-card lv2-card--blue" id="roleDirector" aria-label="ผู้อำนวยการ">
-        <div class="lv2-card__glow"></div>
-        <div class="lv2-card__icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-          </svg>
-        </div>
-        <p class="lv2-card__subtitle">Director Panel</p>
-        <h3 class="lv2-card__title">ผู้อำนวยการ</h3>
-        <p class="lv2-card__desc">ผลงานรายสำนัก · แนวโน้ม ความเสี่ยง · AI สรุปผล</p>
-        <div class="lv2-card__cta">
-          <span>เข้าสู่ระบบ</span>
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </div>
-      </a>
-
-      <!-- KPI Data Entry -->
-      <a href="admin.html" class="lv2-card lv2-card--green" id="roleAdmin" aria-label="บันทึกผล KPI">
-        <div class="lv2-card__glow"></div>
-        <div class="lv2-card__icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-          </svg>
-        </div>
-        <p class="lv2-card__subtitle">Data Entry</p>
-        <h3 class="lv2-card__title">บันทึกผล KPI</h3>
-        <p class="lv2-card__desc">เพิ่ม/แก้ไข KPI · บันทึกผล จัดการข้อมูลพื้นฐาน</p>
-        <div class="lv2-card__cta">
-          <span>เข้าสู่ระบบ</span>
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </div>
-      </a>
-
-      <!-- Smart Reports -->
-      <a href="reports.html" class="lv2-card lv2-card--amber" id="roleReports" aria-label="รายงานอัจฉริยะ">
-        <div class="lv2-card__glow"></div>
-        <div class="lv2-card__icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-        </div>
-        <p class="lv2-card__subtitle">Smart Reporting</p>
-        <h3 class="lv2-card__title">รายงานอัจฉริยะ</h3>
-        <p class="lv2-card__desc">AI สรุปผล · แนวโน้ม ความเสี่ยง · Export Data</p>
-        <div class="lv2-card__cta">
-          <span>เข้าสู่ระบบ</span>
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </div>
-      </a>
-
-      <!-- Admin Back-Office — Full Width -->
-      <div class="lv2-admin-wrap">
-        <a href="login.html" class="lv2-admin" id="roleBackOffice" aria-label="Admin Back-Office">
-          <div class="lv2-admin__inner">
-            <div class="lv2-admin__icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-              </svg>
-            </div>
-            <div class="lv2-admin__text">
-              <h3>Admin Back-Office</h3>
-              <p>จัดการสิทธิ์ผู้ใช้งาน (RBAC), ตรวจสอบกิจกรรมระบบ และเฝ้าระวังประสิทธิภาพการทำงาน</p>
-            </div>
-            <div class="lv2-admin__badge">Control Center</div>
+        <!-- Executive -->
+        <a href="executive.html" class="lv2-card lv2-card--purple" id="roleExecutive">
+          <div class="lv2-card__glow" aria-hidden="true"></div>
+          <div class="lv2-card__icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+          </div>
+          <p class="lv2-card__subtitle">Executive Dashboard</p>
+          <h2 class="lv2-card__title">ผู้บริหาร</h2>
+          <p class="lv2-card__desc">ภาพรวมเมือง · AI วิเคราะห์ ทุกสำนัก/กอง · ยุทธศาสตร์</p>
+          <div class="lv2-card__cta" aria-hidden="true">
+            <span>เข้าสู่ระบบ</span>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
           </div>
         </a>
-      </div>
 
-    </div><!-- end .lv2-grid -->
+        <!-- Director -->
+        <a href="director.html" class="lv2-card lv2-card--blue" id="roleDirector">
+          <div class="lv2-card__glow" aria-hidden="true"></div>
+          <div class="lv2-card__icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+          </div>
+          <p class="lv2-card__subtitle">Director Panel</p>
+          <h2 class="lv2-card__title">ผู้อำนวยการ</h2>
+          <p class="lv2-card__desc">ผลงานรายสำนัก · แนวโน้ม ความเสี่ยง · AI สรุปผล</p>
+          <div class="lv2-card__cta" aria-hidden="true">
+            <span>เข้าสู่ระบบ</span>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- KPI Data Entry -->
+        <a href="admin.html" class="lv2-card lv2-card--green" id="roleAdmin">
+          <div class="lv2-card__glow" aria-hidden="true"></div>
+          <div class="lv2-card__icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+          </div>
+          <p class="lv2-card__subtitle">Data Entry</p>
+          <h2 class="lv2-card__title">บันทึกผล KPI</h2>
+          <p class="lv2-card__desc">เพิ่ม/แก้ไข KPI · บันทึกผล จัดการข้อมูลพื้นฐาน</p>
+          <div class="lv2-card__cta" aria-hidden="true">
+            <span>เข้าสู่ระบบ</span>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Smart Reports -->
+        <a href="reports.html" class="lv2-card lv2-card--amber" id="roleReports">
+          <div class="lv2-card__glow" aria-hidden="true"></div>
+          <div class="lv2-card__icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <p class="lv2-card__subtitle">Smart Reporting</p>
+          <h2 class="lv2-card__title">รายงานอัจฉริยะ</h2>
+          <p class="lv2-card__desc">AI สรุปผล · แนวโน้ม ความเสี่ยง · Export Data</p>
+          <div class="lv2-card__cta" aria-hidden="true">
+            <span>เข้าสู่ระบบ</span>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Admin Back-Office — Full Width -->
+        <div class="lv2-admin-wrap">
+          <a href="login.html" class="lv2-admin" id="roleBackOffice">
+            <div class="lv2-admin__inner">
+              <div class="lv2-admin__icon" aria-hidden="true">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+              </div>
+              <div class="lv2-admin__text">
+                <h2>Admin Back-Office</h2>
+                <p>จัดการสิทธิ์ผู้ใช้งาน (RBAC), ตรวจสอบกิจกรรมระบบ และเฝ้าระวังประสิทธิภาพการทำงาน</p>
+              </div>
+              <div class="lv2-admin__badge" aria-hidden="true">Control Center</div>
+            </div>
+          </a>
+        </div>
+
+      </nav><!-- end nav.lv2-grid -->
+    </main>
 
     <!-- Footer -->
     <footer class="lv2-footer">
@@ -548,10 +649,10 @@
             <div class="lv2-ping__ring"></div>
             <div class="lv2-ping__dot"></div>
           </div>
-          System Online — AI-Driven Platform
+          <span>System Online — AI-Driven Platform</span>
         </div>
-        <div class="lv2-footer__divider"></div>
-        <div class="lv2-footer__version">v3.0 Updated: 11/03/2026 14:45</div>
+        <div class="lv2-footer__divider" aria-hidden="true"></div>
+        <div class="lv2-footer__version">v3.1 Updated: 11/03/2026 20:00</div>
       </div>
       <p class="lv2-footer__credit">พัฒนาโดย <span>นักวิชาการคอมพิวเตอร์</span></p>
       <p class="lv2-footer__slogan">"Transforming Municipal Data into Intelligent Decisions"</p>
