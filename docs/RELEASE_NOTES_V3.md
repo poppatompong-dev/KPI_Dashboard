@@ -1,35 +1,27 @@
-# 📢 Release Notes: Smart City KPI Platform v3.0
+# 📢 Release Notes: Smart City KPI Platform v3.1
 
 **Status**: PRODUCTION READY 🚀
 **Release Date**: 11 มีนาคม 2026
-**Release Time**: 15:00 น.
-**Version**: 3.0 (Major Update)
+**Release Time**: 19:45 น.
+**Version**: 3.1 (Patch Update)
 **Lead Developer**: นักวิชาการคอมพิวเตอร์ (Computer Technical Officer)
 
 ---
 
 ## 🛠️ Change Log (สรุปการแก้ไขโดยละเอียด)
 
-### 1. 📱 Responsive Navigation & UI (Mobile-First)
-- **Unified Navigation**: รวมระบบเมนู (Sidebar) ให้เป็นมาตรฐานเดียวกันทุกหน้า
-- **Mobile Bottom Nav**: เพิ่มแถบเมนูด้านล่างสำหรับโทรศัพท์มือถือ (แสดงเฉพาะหน้าจอขนาดเล็ก)
-- **Adaptive Layout**: ปรับแต่ง Dashboard และตารางให้รองรับหน้าจอทุกขนาด (Responsive Tables & Grid)
-- **Floating Buttons**: ปรับปรุงปุ่มกดให้มีความเป็นมิตรกัยหน้าจอมือถือมากขึ้น
+### 🆕 v3.1 — Landing Page Redesign & DevOps (11/03/2026 19:45)
+- **Dark Glassmorphism Landing Page**: ออกแบบหน้าแรกใหม่ทั้งหมด — Dark theme `#0a0c14`, Glass cards พร้อม hover glow effects และ micro-animations
+- **Full Responsive**: รองรับทุกขนาดหน้าจอ (400px, 640px, 768px, 1024px, 1280px+) ด้วย 4 breakpoints
+- **Unit Testing Infrastructure**: ติดตั้ง Vitest พร้อมเขียน 15 Unit Tests ครอบคลุม `ScoringEngine` และ `AIEngine` — ผ่านทั้งหมด
+- **Vercel Deployment Ready**: เพิ่มไฟล์ `vercel.json` สำหรับ Static Site hosting พร้อม Clean URL routing
+- **Vite Dev Server**: เพิ่ม `npm run dev` สำหรับ Local development ด้วย Vite
 
-### 2. 🧠 Intelligent Reporting System (AI Engine)
-- **New Page**: สร้างหน้า `reports.html` และ `js/reports.js`
-- **5 Report Types**: รองรับรายงาน 5 รูปแบบ (Executive, Department, Strategic, Trend, Risk)
-- **Risk Analysis**: ระบบตรวจจับ KPI วิกฤตและทำนายโอกาสที่จะไม่บรรลุเป้าหมายล่วงหน้า
-- **NLP Insights**: AI สรุปผลการดำเนินงานเป็นภาษาไทยที่อ่านง่ายสำหรับผู้บริหาร
-
-### 3. 📘 Help & Documentation
-- **User Manual**: เพิ่มหน้า `manual.html` รวบรวมวิธีใช้งานแยกตามบทบาท
-- **Sidebar Integration**: เพิ่มลิงก์ "คู่มือการใช้งาน" ไว้ในแถบเมนูทุกหน้า
-- **built-in PDF Export**: รองรับการพิมพ์รายงานออกมาเป็น PDF (Print Mode Optimized)
-
-### 4. 🎖️ Professional Branding & Credits
-- **Footer Updates**: เพิ่มเครดิต "นักวิชาการคอมพิวเตอร์" และสโลแกนประจำระบบ
-- **Version Tracking**: ระบุ Version, วันที่ และเวลาอัปเดตล่าสุดที่ส่วนท้ายของทุกไฟล์ HTML
+### v3.0 — Major Release (11/03/2026 15:00)
+- **Responsive Navigation & UI**: รวมระบบเมนู Sidebar เป็นมาตรฐานเดียวกันทุกหน้า, Mobile Bottom Nav
+- **Intelligent Reporting System**: สร้างหน้า `reports.html` + AI Engine (5 Report Types, Risk Analysis, NLP)
+- **Help & Documentation**: เพิ่มหน้า `manual.html`, built-in PDF Export
+- **Professional Branding**: Footer Credits, Version Tracking
 
 ---
 
@@ -37,6 +29,7 @@
 
 | Version | Date | Time | Key Changes | Developer |
 |:---|:---|:---|:---|:---|
+| **v3.1** | 11/03/2026 | 19:45 | Landing Page Redesign, Unit Tests, Vercel Deploy | นักวิชาการคอมพิวเตอร์ |
 | **v3.0** | 11/03/2026 | 15:00 | Major Release: Responsive, AI Reports, Manual, Credits | นักวิชาการคอมพิวเตอร์ |
 | **v2.5** | 10/03/2026 | 14:20 | Admin Back-Office & User Management | นักวิชาการคอมพิวเตอร์ |
 | **v2.0** | 08/03/2026 | 10:00 | Executive & Director Dashboards | นักวิชาการคอมพิวเตอร์ |

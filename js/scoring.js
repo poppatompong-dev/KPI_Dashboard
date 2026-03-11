@@ -164,7 +164,7 @@ const ScoringEngine = (() => {
   };
 })();
 
-// Export for module systems or keep global
+// Export for Node.js environment
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = ScoringEngine;
 }

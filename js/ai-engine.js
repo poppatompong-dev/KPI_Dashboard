@@ -554,3 +554,8 @@ const AIEngine = (() => {
     calcStats
   };
 })();
+
+// Export for Node.js environment
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = AIEngine;
+}

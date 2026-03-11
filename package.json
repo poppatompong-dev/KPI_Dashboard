@@ -1,0 +1,12 @@
+{
+  "name": "kpi-dashboard-tests",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
+  }
+}

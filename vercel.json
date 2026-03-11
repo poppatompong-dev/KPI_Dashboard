@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/executive", "dest": "/executive.html" },
+    { "src": "/director", "dest": "/director.html" },
+    { "src": "/admin", "dest": "/admin.html" },
+    { "src": "/reports", "dest": "/reports.html" },
+    { "src": "/login", "dest": "/login.html" },
+    { "src": "/backoffice", "dest": "/backoffice.html" },
+    { "src": "/manual", "dest": "/manual.html" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}

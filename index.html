@@ -7,78 +7,557 @@
   <meta name="description" content="ระบบจัดการผลการดำเนินงาน KPI อัจฉริยะ สำหรับเทศบาลนคร พร้อมวิเคราะห์ AI และแดชบอร์ดผู้บริหาร">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ── Landing v2 — Dark Glassmorphism ── */
+    body.landing-v2 {
+      background: #0a0c14;
+      color: #cbd5e1;
+      overflow-x: hidden;
+      display: block;
+      min-height: 100vh;
+    }
+
+    /* Background ambient blobs */
+    .lv2-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .lv2-bg__blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+    }
+    .lv2-bg__blob--1 { top: -10%; left: -10%; width: 40%; height: 40%; background: rgba(37,99,235,0.10); }
+    .lv2-bg__blob--2 { top: 20%; right: -5%; width: 30%; height: 30%; background: rgba(139,92,246,0.10); }
+    .lv2-bg__blob--3 { bottom: -10%; left: 20%; width: 50%; height: 50%; background: rgba(67,56,202,0.08); }
+
+    /* Wrapper */
+    .lv2-wrap {
+      position: relative;
+      z-index: 10;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Header ── */
+    .lv2-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      animation: lv2FadeSlide 0.8s cubic-bezier(.4,0,.2,1) both;
+    }
+    .lv2-header__logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 5rem;
+      height: 5rem;
+      border-radius: 1.25rem;
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      box-shadow: 0 0 32px rgba(37,99,235,0.3);
+      margin-bottom: 1.5rem;
+    }
+    .lv2-header__logo svg { width: 2.5rem; height: 2.5rem; color: #fff; }
+    .lv2-header__title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      background: linear-gradient(to bottom, #ffffff 30%, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .lv2-header__title span { -webkit-text-fill-color: #3b82f6; }
+    .lv2-header__subtitle {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: #64748b;
+      letter-spacing: 0.02em;
+    }
+    .lv2-header__divider {
+      width: 6rem;
+      height: 2px;
+      margin: 0.75rem auto 0;
+      background: linear-gradient(to right, transparent, #3b82f6, transparent);
+      border-radius: 9999px;
+      opacity: 0.5;
+    }
+
+    /* ── Card Grid ── */
+    .lv2-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* ── Role Card ── */
+    .lv2-card {
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.75rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px);
+      cursor: pointer;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1),
+                  border-color 0.4s ease,
+                  box-shadow 0.4s ease;
+      animation: lv2FadeSlide 0.7s cubic-bezier(.4,0,.2,1) both;
+    }
+    .lv2-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    /* Card inner glow on hover */
+    .lv2-card__glow {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      border-radius: inherit;
+      transition: opacity 0.5s ease;
+      filter: blur(60px);
+      transform: scale(0.5);
+      z-index: -1;
+    }
+    .lv2-card:hover .lv2-card__glow { opacity: 1; }
+    .lv2-card--purple .lv2-card__glow { background: linear-gradient(135deg,#8b5cf6,#4f46e5); }
+    .lv2-card--blue   .lv2-card__glow { background: linear-gradient(135deg,#3b82f6,#06b6d4); }
+    .lv2-card--green  .lv2-card__glow { background: linear-gradient(135deg,#10b981,#0d9488); }
+    .lv2-card--amber  .lv2-card__glow { background: linear-gradient(135deg,#f59e0b,#ea580c); }
+
+    /* Card Icon */
+    .lv2-card__icon {
+      display: inline-flex;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.4s ease;
+      width: fit-content;
+    }
+    .lv2-card:hover .lv2-card__icon { transform: scale(1.1) rotate(3deg); }
+    .lv2-card__icon svg { width: 2rem; height: 2rem; color: #fff; }
+
+    .lv2-card--purple .lv2-card__icon { background: linear-gradient(135deg,#8b5cf6,#4f46e5); box-shadow: 0 8px 20px rgba(139,92,246,0.4); }
+    .lv2-card--blue   .lv2-card__icon { background: linear-gradient(135deg,#3b82f6,#06b6d4); box-shadow: 0 8px 20px rgba(59,130,246,0.4); }
+    .lv2-card--green  .lv2-card__icon { background: linear-gradient(135deg,#10b981,#0d9488); box-shadow: 0 8px 20px rgba(16,185,129,0.4); }
+    .lv2-card--amber  .lv2-card__icon { background: linear-gradient(135deg,#f59e0b,#ea580c); box-shadow: 0 8px 20px rgba(245,158,11,0.4); }
+
+    /* Card Text */
+    .lv2-card__subtitle {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.35rem;
+      opacity: 0.75;
+    }
+    .lv2-card--purple .lv2-card__subtitle { color: #a78bfa; }
+    .lv2-card--blue   .lv2-card__subtitle { color: #60a5fa; }
+    .lv2-card--green  .lv2-card__subtitle { color: #34d399; }
+    .lv2-card--amber  .lv2-card__subtitle { color: #fbbf24; }
+
+    .lv2-card__title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s;
+    }
+    .lv2-card:hover .lv2-card__title { color: #bfdbfe; }
+
+    .lv2-card__desc {
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .lv2-card__cta {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #475569;
+      transition: color 0.3s;
+    }
+    .lv2-card:hover .lv2-card__cta { color: #f1f5f9; }
+    .lv2-card__cta svg { width: 0.9rem; height: 0.9rem; transition: transform 0.3s; }
+    .lv2-card:hover .lv2-card__cta svg { transform: translateX(4px); }
+
+    /* Stagger animation delays */
+    .lv2-card:nth-child(1) { animation-delay: 0.1s; }
+    .lv2-card:nth-child(2) { animation-delay: 0.2s; }
+    .lv2-card:nth-child(3) { animation-delay: 0.3s; }
+    .lv2-card:nth-child(4) { animation-delay: 0.4s; }
+
+    /* ── Admin Card — Full Width ── */
+    .lv2-admin-wrap {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      margin-top: 0.25rem;
+      animation: lv2FadeSlide 0.7s 0.5s cubic-bezier(.4,0,.2,1) both;
+    }
+    .lv2-admin {
+      position: relative;
+      padding: 4px;
+      border-radius: 2rem;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.12));
+      transition: background 0.4s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      width: 100%;
+      max-width: 760px;
+    }
+    .lv2-admin:hover {
+      background: linear-gradient(135deg, rgba(225,29,72,0.25), rgba(244,63,94,0.25));
+    }
+    .lv2-admin__inner {
+      background: rgba(15,17,26,0.85);
+      backdrop-filter: blur(24px);
+      padding: 1.5rem 2rem;
+      border-radius: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .lv2-admin__icon {
+      flex-shrink: 0;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: linear-gradient(135deg,#e11d48,#f43f5e);
+      box-shadow: 0 8px 24px rgba(225,29,72,0.4);
+      transition: transform 0.4s;
+    }
+    .lv2-admin:hover .lv2-admin__icon { transform: rotate(12deg); }
+    .lv2-admin__icon svg { width: 2rem; height: 2rem; color: #fff; }
+    .lv2-admin__text h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 0.25rem;
+    }
+    .lv2-admin__text p {
+      font-size: 0.82rem;
+      color: #64748b;
+      max-width: 420px;
+      line-height: 1.5;
+    }
+    .lv2-admin__badge {
+      margin-left: auto;
+      flex-shrink: 0;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(244,63,94,0.35);
+      color: #fb7185;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.3s;
+    }
+    .lv2-admin:hover .lv2-admin__badge {
+      background: #e11d48;
+      color: #fff;
+      border-color: transparent;
+    }
+
+    /* ── Footer ── */
+    .lv2-footer {
+      margin-top: 5rem;
+      text-align: center;
+      animation: lv2FadeSlide 0.7s 0.6s cubic-bezier(.4,0,.2,1) both;
+    }
+    .lv2-footer__pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      margin-bottom: 1.5rem;
+    }
+    .lv2-footer__status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #34d399;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .lv2-footer__divider {
+      width: 1px;
+      height: 1rem;
+      background: rgba(255,255,255,0.12);
+    }
+    .lv2-footer__version {
+      font-size: 0.7rem;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    .lv2-footer__credit { font-size: 0.8rem; color: #334155; margin-bottom: 0.3rem; }
+    .lv2-footer__credit span { color: #94a3b8; font-weight: 500; }
+    .lv2-footer__slogan {
+      font-size: 0.65rem;
+      color: #1e293b;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    /* Ping dot */
+    .lv2-ping {
+      position: relative;
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+    .lv2-ping__ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #34d399;
+      opacity: 0.6;
+      animation: lv2Ping 1.4s ease-in-out infinite;
+    }
+    .lv2-ping__dot {
+      position: absolute;
+      inset: 15%;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    /* ── Keyframes ── */
+    @keyframes lv2FadeSlide {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes lv2Ping {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50%       { transform: scale(1.6); opacity: 0; }
+    }
+
+    /* ── Responsive ── */
+
+    /* Tablet landscape: 2-column grid */
+    @media (max-width: 1024px) {
+      .lv2-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .lv2-admin__badge { display: none; }
+      .lv2-wrap { padding: 2.5rem 1.25rem 3rem; }
+    }
+
+    /* Tablet portrait */
+    @media (max-width: 768px) {
+      .lv2-header { margin-bottom: 2.5rem; }
+      .lv2-header__logo { width: 4rem; height: 4rem; }
+      .lv2-header__logo svg { width: 2rem; height: 2rem; }
+      .lv2-card { padding: 1.5rem; border-radius: 1.25rem; }
+      .lv2-card__title { font-size: 1.2rem; }
+      .lv2-card__icon { padding: 0.85rem; border-radius: 0.875rem; margin-bottom: 1.25rem; }
+      .lv2-card__icon svg { width: 1.6rem; height: 1.6rem; }
+      .lv2-admin__inner { padding: 1.25rem 1.5rem; gap: 1.25rem; }
+      .lv2-admin__icon { padding: 0.85rem; }
+      .lv2-admin__icon svg { width: 1.6rem; height: 1.6rem; }
+      .lv2-footer { margin-top: 3.5rem; }
+      .lv2-footer__pill { padding: 0.65rem 1.25rem; gap: 0.75rem; }
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .lv2-wrap { padding: 2rem 1rem 3rem; }
+      .lv2-grid { grid-template-columns: 1fr; gap: 0.875rem; }
+      .lv2-header { margin-bottom: 2rem; }
+      .lv2-header__title { font-size: clamp(1.75rem, 8vw, 2.5rem); letter-spacing: -0.02em; }
+      .lv2-header__subtitle { font-size: 0.9rem; }
+      .lv2-card { padding: 1.25rem 1.25rem 1.25rem; border-radius: 1.25rem; }
+      .lv2-admin__inner { flex-direction: column; text-align: center; }
+      .lv2-admin__badge { display: none; }
+      .lv2-admin { max-width: 100%; }
+      .lv2-admin__text p { margin: 0 auto; }
+      /* Disable heavy animations on mobile for performance */
+      .lv2-card__glow { display: none; }
+    }
+
+    /* Very small: 360px */
+    @media (max-width: 400px) {
+      .lv2-header__logo { width: 3.5rem; height: 3.5rem; margin-bottom: 1rem; }
+      .lv2-card__cta { margin-top: 1rem; }
+      .lv2-footer__divider { display: none; }
+    }
+  </style>
 </head>
-<body style="display:block;">
+<body class="landing-v2">
 
-  <div class="landing-center">
-    <!-- Logo -->
-    <div style="width:4.5rem;height:4.5rem;background:linear-gradient(135deg,var(--clr-primary-500),var(--clr-accent-500));border-radius:var(--radius-lg);display:grid;place-items:center;margin-bottom:var(--space-lg);">
-      <svg style="width:2.5rem;height:2.5rem;color:#fff;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-    </div>
+  <!-- Ambient Background -->
+  <div class="lv2-bg" aria-hidden="true">
+    <div class="lv2-bg__blob lv2-bg__blob--1"></div>
+    <div class="lv2-bg__blob lv2-bg__blob--2"></div>
+    <div class="lv2-bg__blob lv2-bg__blob--3"></div>
+  </div>
 
-    <h1 class="landing-title">Smart City KPI Platform</h1>
-    <p class="landing-subtitle">ระบบจัดการผลการดำเนินงานอัจฉริยะ — เทศบาลนคร</p>
+  <div class="lv2-wrap">
 
-    <div class="role-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));max-width:1100px;">
+    <!-- Header -->
+    <header class="lv2-header">
+      <div class="lv2-header__logo" aria-hidden="true">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+      </div>
+      <h1 class="lv2-header__title">
+        Smart City <span>KPI</span> Platform
+      </h1>
+      <p class="lv2-header__subtitle">ระบบจัดการผลการดำเนินงานอัจฉริยะ — เทศบาลนคร</p>
+      <div class="lv2-header__divider"></div>
+    </header>
+
+    <!-- Card Grid -->
+    <div class="lv2-grid" role="navigation" aria-label="เมนูหลัก">
+
       <!-- Executive -->
-      <a href="executive.html" class="role-card" id="roleExecutive">
-        <div class="role-card__icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+      <a href="executive.html" class="lv2-card lv2-card--purple" id="roleExecutive" aria-label="ผู้บริหาร">
+        <div class="lv2-card__glow"></div>
+        <div class="lv2-card__icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
         </div>
-        <div class="role-card__title">ผู้บริหาร</div>
-        <div class="role-card__desc">ภาพรวมเมือง · AI วิเคราะห์<br>ทุกสำนัก/กอง · ยุทธศาสตร์</div>
+        <p class="lv2-card__subtitle">Executive Dashboard</p>
+        <h3 class="lv2-card__title">ผู้บริหาร</h3>
+        <p class="lv2-card__desc">ภาพรวมเมือง · AI วิเคราะห์ ทุกสำนัก/กอง · ยุทธศาสตร์</p>
+        <div class="lv2-card__cta">
+          <span>เข้าสู่ระบบ</span>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
       </a>
 
       <!-- Director -->
-      <a href="director.html" class="role-card" id="roleDirector">
-        <div class="role-card__icon" style="background:linear-gradient(135deg,var(--clr-primary-500),var(--clr-accent-500));">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      <a href="director.html" class="lv2-card lv2-card--blue" id="roleDirector" aria-label="ผู้อำนวยการ">
+        <div class="lv2-card__glow"></div>
+        <div class="lv2-card__icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+          </svg>
         </div>
-        <div class="role-card__title">ผู้อำนวยการ</div>
-        <div class="role-card__desc">ผลงานรายสำนัก · แนวโน้ม<br>ความเสี่ยง · AI สรุปผล</div>
+        <p class="lv2-card__subtitle">Director Panel</p>
+        <h3 class="lv2-card__title">ผู้อำนวยการ</h3>
+        <p class="lv2-card__desc">ผลงานรายสำนัก · แนวโน้ม ความเสี่ยง · AI สรุปผล</p>
+        <div class="lv2-card__cta">
+          <span>เข้าสู่ระบบ</span>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
       </a>
 
-      <!-- Basic Admin (legacy) -->
-      <a href="admin.html" class="role-card" id="roleAdmin">
-        <div class="role-card__icon" style="background:linear-gradient(135deg,var(--clr-success-500),#34d399);">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      <!-- KPI Data Entry -->
+      <a href="admin.html" class="lv2-card lv2-card--green" id="roleAdmin" aria-label="บันทึกผล KPI">
+        <div class="lv2-card__glow"></div>
+        <div class="lv2-card__icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
         </div>
-        <div class="role-card__title">บันทึกผล KPI</div>
-        <div class="role-card__desc">เพิ่ม/แก้ไข KPI · บันทึกผล<br>จัดการข้อมูลพื้นฐาน</div>
+        <p class="lv2-card__subtitle">Data Entry</p>
+        <h3 class="lv2-card__title">บันทึกผล KPI</h3>
+        <p class="lv2-card__desc">เพิ่ม/แก้ไข KPI · บันทึกผล จัดการข้อมูลพื้นฐาน</p>
+        <div class="lv2-card__cta">
+          <span>เข้าสู่ระบบ</span>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
       </a>
 
-      <!-- Reports (NEW) -->
-      <a href="reports.html" class="role-card" id="roleReports">
-        <div class="role-card__icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      <!-- Smart Reports -->
+      <a href="reports.html" class="lv2-card lv2-card--amber" id="roleReports" aria-label="รายงานอัจฉริยะ">
+        <div class="lv2-card__glow"></div>
+        <div class="lv2-card__icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
         </div>
-        <div class="role-card__title">รายงานอัจฉริยะ</div>
-        <div class="role-card__desc">🧠 AI สรุปผล · แนวโน้ม<br>ความเสี่ยง · Export</div>
+        <p class="lv2-card__subtitle">Smart Reporting</p>
+        <h3 class="lv2-card__title">รายงานอัจฉริยะ</h3>
+        <p class="lv2-card__desc">AI สรุปผล · แนวโน้ม ความเสี่ยง · Export Data</p>
+        <div class="lv2-card__cta">
+          <span>เข้าสู่ระบบ</span>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
       </a>
 
-      <!-- Admin Back-Office (NEW) -->
-      <a href="login.html" class="role-card" id="roleBackOffice" style="border-color:rgba(139,92,246,.4);">
-        <div class="role-card__icon" style="background:linear-gradient(135deg,#e11d48,#f43f5e);">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-        </div>
-        <div class="role-card__title">Admin Back-Office</div>
-        <div class="role-card__desc">🔐 จัดการผู้ใช้ · RBAC<br>Audit Logs · Monitoring</div>
-      </a>
-    </div>
-
-    <div style="margin-top:var(--space-2xl);text-align:center;">
-      <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:0.5rem;">
-        <div class="pulse-dot"></div>
-        <span style="font-size:0.75rem;color:rgb(255 255 255/.4);">ระบบทำงานปกติ — AI-Driven Platform</span>
+      <!-- Admin Back-Office — Full Width -->
+      <div class="lv2-admin-wrap">
+        <a href="login.html" class="lv2-admin" id="roleBackOffice" aria-label="Admin Back-Office">
+          <div class="lv2-admin__inner">
+            <div class="lv2-admin__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <div class="lv2-admin__text">
+              <h3>Admin Back-Office</h3>
+              <p>จัดการสิทธิ์ผู้ใช้งาน (RBAC), ตรวจสอบกิจกรรมระบบ และเฝ้าระวังประสิทธิภาพการทำงาน</p>
+            </div>
+            <div class="lv2-admin__badge">Control Center</div>
+          </div>
+        </a>
       </div>
-      <p style="font-size:0.7rem;color:rgb(255 255 255/.25);">v3.0 Updated: 11/03/2026 14:45</p>
-      <div style="margin-top:var(--space-md); font-size: 0.75rem; color:rgb(255 255 255/.4);">
-        พัฒนาโดย <b>นักวิชาการคอมพิวเตอร์</b> — "Transforming Municipal Data into Intelligent Decisions"
+
+    </div><!-- end .lv2-grid -->
+
+    <!-- Footer -->
+    <footer class="lv2-footer">
+      <div class="lv2-footer__pill">
+        <div class="lv2-footer__status">
+          <div class="lv2-ping" aria-hidden="true">
+            <div class="lv2-ping__ring"></div>
+            <div class="lv2-ping__dot"></div>
+          </div>
+          System Online — AI-Driven Platform
+        </div>
+        <div class="lv2-footer__divider"></div>
+        <div class="lv2-footer__version">v3.0 Updated: 11/03/2026 14:45</div>
       </div>
-    </div>
-  </div>
-  <script src="js/nav.js"></script>
+      <p class="lv2-footer__credit">พัฒนาโดย <span>นักวิชาการคอมพิวเตอร์</span></p>
+      <p class="lv2-footer__slogan">"Transforming Municipal Data into Intelligent Decisions"</p>
+    </footer>
+
+  </div><!-- end .lv2-wrap -->
+
 </body>
 </html>
