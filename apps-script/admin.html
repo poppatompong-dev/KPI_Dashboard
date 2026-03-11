@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Smart City KPI Platform</title>
+  <meta name="description" content="ระบบจัดการและบันทึกผล KPI สำหรับเจ้าหน้าที่เทศบาลนคร">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <?!= include('Style') ?>
+</head>
+<body>
+
+  <!-- ═══════ Sidebar ═══════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <div class="sidebar__brand-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      </div>
+      <div class="sidebar__brand-text">KPI <span>PLATFORM</span></div>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-label">แดชบอร์ด</div>
+      <a href="?page=executive" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        ผู้บริหาร (Executive)
+      </a>
+      <a href="?page=director" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        ผู้อำนวยการ (Director)
+      </a>
+
+      <div class="sidebar__section-label">รายงาน</div>
+      <a href="?page=reports" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        รายงานอัจฉริยะ
+      </a>
+      <a href="?page=manual" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.082.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.168.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        คู่มือการใช้งาน
+      </a>
+
+      <div class="sidebar__section-label">จัดการ</div>
+      <a href="?page=admin" class="sidebar__link sidebar__link--active">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        บันทึกผล KPI
+      </a>
+      <a href="?page=login" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        Admin Back-Office
+      </a>
+    </nav>
+    <div class="sidebar__footer">
+      Smart City KPI Platform v3.0
+    </div>
+  </aside>
+
+  <!-- ═══════ Main Content ═══════ -->
+  <main class="main-content">
+    <header class="top-header">
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <button class="top-header__mobile-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg style="width:1.5rem;height:1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <h1 class="top-header__title">📝 ระบบจัดการและบันทึกผล KPI</h1>
+      </div>
+      <div class="top-header__actions">
+        <button class="btn btn--primary" id="btnAddKpi">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+          เพิ่มตัวชี้วัดใหม่
+        </button>
+      </div>
+    </header>
+
+    <!-- Admin Tabs -->
+    <div class="filter-bar" style="gap:0;">
+      <button class="tab tab--active" data-section="kpi-list">📋 รายการตัวชี้วัด</button>
+      <button class="tab" data-section="entry">📥 บันทึกผลรายเดือน</button>
+      <button class="tab" data-section="departments">🏢 จัดการหน่วยงาน</button>
+    </div>
+
+    <div class="content-body">
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p class="loading-overlay__text">กำลังโหลดข้อมูลระบบ...</p>
+      </div>
+
+      <!-- Section: KPI Master List -->
+      <section id="section-kpi-list" class="admin-section">
+        <div class="table-card">
+          <div class="table-card__header">
+            <h2 class="table-card__title">รายการตัวชี้วัดทั้งหมด (KPI Master Search)</h2>
+            <div class="table-card__search">
+              <svg class="table-card__search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input type="text" class="table-card__search-input" id="searchKpi" placeholder="ค้นหาตัวชี้วัด...">
+            </div>
+          </div>
+          <div class="responsive-table">
+            <table class="kpi-table">
+              <thead>
+                <tr>
+                  <th>รหัส</th>
+                  <th>ชื่อตัวชี้วัด</th>
+                  <th>หน่วยงาน</th>
+                  <th>เป้าหมายปี</th>
+                  <th class="text-center">น้ำหนัก</th>
+                  <th class="text-right">จัดการ</th>
+                </tr>
+              </thead>
+              <tbody id="masterKpiTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Result Entry -->
+      <section id="section-entry" class="admin-section" style="display:none;">
+        <div class="chart-card" style="margin-bottom:var(--space-xl);">
+          <div class="chart-card__header"><h2 class="chart-card__title">บันทึกผลงานจริง (Monthly Result Entry)</h2></div>
+          <div class="filter-bar" style="padding:0; border-bottom:none; margin-bottom:var(--space-lg);">
+            <select class="form-select" id="entryDept" style="width:250px;"></select>
+            <select class="form-select" id="entryMonth" style="width:150px;"></select>
+            <button class="btn btn--primary" id="btnLoadEntry">ดึงข้อมูล</button>
+          </div>
+          <div class="responsive-table">
+            <table class="kpi-table">
+              <thead>
+                <tr>
+                  <th>ชื่อตัวชี้วัด</th>
+                  <th class="text-right">เป้าหมาย</th>
+                  <th class="text-right" width="200">ผลงานจริง</th>
+                  <th>หน่วย</th>
+                  <th class="text-right">บันทึก</th>
+                </tr>
+              </thead>
+              <tbody id="resultEntryTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Departments Management -->
+      <section id="section-departments" class="admin-section" style="display:none;">
+        <div class="dept-card-grid" id="deptManagerList"></div>
+      </section>
+
+      <footer class="page-footer">
+        <div class="footer-credit">
+          พัฒนาโดย <b>นักวิชาการคอมพิวเตอร์</b> เทศบาลนคร
+        </div>
+        <div class="footer-slogan">
+          "Transforming Municipal Data into Intelligent Decisions"
+        </div>
+        <div style="font-size: 0.65rem; color: var(--clr-neutral-300); margin-top: var(--space-sm);">
+          v3.0 Updated: 11/03/2026 14:48
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Modal: Edit KPI -->
+  <div class="modal-backdrop" id="modalKpi">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title" id="modalTitle">เพิ่มตัวชี้วัดใหม่</h3>
+        <button class="modal__close" id="btnCloseModal">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="kpiForm">
+        <div class="modal__body">
+          <div class="form-group">
+            <label class="form-label">ชื่อตัวชี้วัด (KPI Name)</label>
+            <input type="text" class="form-input" id="kpi_name" required>
+          </div>
+          <div class="form-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-md);">
+            <div class="form-group">
+              <label class="form-label">หน่วยงาน (Department)</label>
+              <select class="form-select" id="department" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ยุทธศาสตร์ (Strategy)</label>
+              <select class="form-select" id="strategy" required></select>
+            </div>
+          </div>
+          <div class="form-grid" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:var(--space-md);">
+            <div class="form-group">
+              <label class="form-label">เป้าหมายปี (Target)</label>
+              <input type="number" class="form-input" id="target_value" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">หน่วยนับ (Unit)</label>
+              <input type="text" class="form-input" id="unit" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">น้ำหนัก % (Weight)</label>
+              <input type="number" class="form-input" id="weight" step="0.01" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">วิธีการคำนวณ (Calculation Type)</label>
+            <select class="form-select" id="calculation_type">
+              <option value="higher_better">ยิ่งสูงยิ่งดี (Higher is Better)</option>
+              <option value="lower_better">ยิ่งต่ำยิ่งดี (Lower is Better)</option>
+              <option value="percentage">ค่าร้อยละ (Percentage)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal__footer">
+          <button type="button" class="btn btn--ghost" id="btnCancelModal">ยกเลิก</button>
+          <button type="submit" class="btn btn--primary">บันทึกข้อมูล</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <?!= include('JS_Shared') ?>
+  <script src="js/admin.js"></script>
+</body>
+</html>

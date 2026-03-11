@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart City KPI Platform — เทศบาลนคร</title>
+  <meta name="description" content="ระบบจัดการผลการดำเนินงาน KPI อัจฉริยะ สำหรับเทศบาลนคร พร้อมวิเคราะห์ AI และแดชบอร์ดผู้บริหาร">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <?!= include('Style') ?>
+</head>
+<body style="display:block;">
+
+  <div class="landing-center">
+    <!-- Logo -->
+    <div style="width:4.5rem;height:4.5rem;background:linear-gradient(135deg,var(--clr-primary-500),var(--clr-accent-500));border-radius:var(--radius-lg);display:grid;place-items:center;margin-bottom:var(--space-lg);">
+      <svg style="width:2.5rem;height:2.5rem;color:#fff;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+    </div>
+
+    <h1 class="landing-title">Smart City KPI Platform</h1>
+    <p class="landing-subtitle">ระบบจัดการผลการดำเนินงานอัจฉริยะ — เทศบาลนคร</p>
+
+    <div class="role-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));max-width:1100px;">
+      <!-- Executive -->
+      <a href="?page=executive" class="role-card" id="roleExecutive">
+        <div class="role-card__icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <div class="role-card__title">ผู้บริหาร</div>
+        <div class="role-card__desc">ภาพรวมเมือง · AI วิเคราะห์<br>ทุกสำนัก/กอง · ยุทธศาสตร์</div>
+      </a>
+
+      <!-- Director -->
+      <a href="?page=director" class="role-card" id="roleDirector">
+        <div class="role-card__icon" style="background:linear-gradient(135deg,var(--clr-primary-500),var(--clr-accent-500));">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        </div>
+        <div class="role-card__title">ผู้อำนวยการ</div>
+        <div class="role-card__desc">ผลงานรายสำนัก · แนวโน้ม<br>ความเสี่ยง · AI สรุปผล</div>
+      </a>
+
+      <!-- Basic Admin (legacy) -->
+      <a href="?page=admin" class="role-card" id="roleAdmin">
+        <div class="role-card__icon" style="background:linear-gradient(135deg,var(--clr-success-500),#34d399);">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        </div>
+        <div class="role-card__title">บันทึกผล KPI</div>
+        <div class="role-card__desc">เพิ่ม/แก้ไข KPI · บันทึกผล<br>จัดการข้อมูลพื้นฐาน</div>
+      </a>
+
+      <!-- Reports (NEW) -->
+      <a href="?page=reports" class="role-card" id="roleReports">
+        <div class="role-card__icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <div class="role-card__title">รายงานอัจฉริยะ</div>
+        <div class="role-card__desc">🧠 AI สรุปผล · แนวโน้ม<br>ความเสี่ยง · Export</div>
+      </a>
+
+      <!-- Admin Back-Office (NEW) -->
+      <a href="?page=login" class="role-card" id="roleBackOffice" style="border-color:rgba(139,92,246,.4);">
+        <div class="role-card__icon" style="background:linear-gradient(135deg,#e11d48,#f43f5e);">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <div class="role-card__title">Admin Back-Office</div>
+        <div class="role-card__desc">🔐 จัดการผู้ใช้ · RBAC<br>Audit Logs · Monitoring</div>
+      </a>
+    </div>
+
+    <div style="margin-top:var(--space-2xl);text-align:center;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:0.5rem;">
+        <div class="pulse-dot"></div>
+        <span style="font-size:0.75rem;color:rgb(255 255 255/.4);">ระบบทำงานปกติ — AI-Driven Platform</span>
+      </div>
+      <p style="font-size:0.7rem;color:rgb(255 255 255/.25);">v3.0 Updated: 11/03/2026 14:45</p>
+      <div style="margin-top:var(--space-md); font-size: 0.75rem; color:rgb(255 255 255/.4);">
+        พัฒนาโดย <b>นักวิชาการคอมพิวเตอร์</b> — "Transforming Municipal Data into Intelligent Decisions"
+      </div>
+    </div>
+  </div>
+  <?!= include('JS_Shared') ?>
+</body>
+</html>
