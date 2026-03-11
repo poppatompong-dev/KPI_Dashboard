@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Director Dashboard — Smart City KPI Platform</title>
+  <meta name="description" content="แดชบอร์ดผู้อำนวยการ ผลการดำเนินงานรายสำนัก/กอง พร้อม AI วิเคราะห์ความเสี่ยงและแนวโน้ม">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ═══════ Sidebar ═══════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <div class="sidebar__brand-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      </div>
+      <div class="sidebar__brand-text">KPI <span>PLATFORM</span></div>
+    </div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-label">แดชบอร์ด</div>
+      <a href="executive.html" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        ผู้บริหาร (Executive)
+      </a>
+      <a href="director.html" class="sidebar__link sidebar__link--active">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        ผู้อำนวยการ (Director)
+      </a>
+
+      <div class="sidebar__section-label">รายงาน</div>
+      <a href="reports.html" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        รายงานอัจฉริยะ
+      </a>
+      <a href="manual.html" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.082.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.168.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        คู่มือการใช้งาน
+      </a>
+
+      <div class="sidebar__section-label">จัดการ</div>
+      <a href="admin.html" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        บันทึกผล KPI
+      </a>
+      <a href="login.html" class="sidebar__link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        Admin Back-Office
+      </a>
+    </nav>
+    <div class="sidebar__footer">
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-bottom:0.25rem;">
+        <div class="pulse-dot"></div>
+        <span style="font-size:0.7rem;color:rgb(255 255 255/.5);">Director View</span>
+      </div>
+      Smart City KPI Platform v3.0
+    </div>
+  </aside>
+
+  <!-- ═══════ Main Content ═══════ -->
+  <main class="main-content">
+    <header class="top-header">
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <button class="top-header__mobile-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg style="width:1.5rem;height:1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <h1 class="top-header__title">🏢 <span id="deptTitle"></span></h1>
+      </div>
+      <div class="top-header__actions">
+        <select class="filter-bar__select" id="deptSelector" style="min-width:180px;"></select>
+        <select class="filter-bar__select" id="filterMonth" style="min-width:80px;"></select>
+      </div>
+    </header>
+
+    <div class="content-body" id="mainContent">
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p class="loading-overlay__text">กำลังวิเคราะห์ข้อมูลสำนัก/กอง...</p>
+      </div>
+
+      <!-- ─── Department Summary Cards ─── -->
+      <div class="stats-grid" id="deptSummaryCards"></div>
+
+      <!-- ─── AI Director Insights ─── -->
+      <div class="chart-card" style="margin-bottom:var(--space-xl);">
+        <div class="chart-card__header">
+          <h2 class="chart-card__title">🤖 AI สรุปผลการดำเนินงาน</h2>
+          <span class="badge badge--green" style="font-size:0.65rem;"><span class="badge__dot"></span>AI Analysis</span>
+        </div>
+        <div id="directorInsights"></div>
+      </div>
+
+      <!-- ─── Charts: Trend + Status ─── -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-card__header"><h2 class="chart-card__title">📈 แนวโน้มผลงานสำนัก/กอง</h2></div>
+          <div class="chart-card__canvas-wrap chart-card__canvas-wrap--trend"><canvas id="deptTrendChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card__header"><h2 class="chart-card__title">📊 สถานะ KPI</h2></div>
+          <div class="chart-card__canvas-wrap chart-card__canvas-wrap--pie"><canvas id="deptStatusChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- ─── Risk Alerts + Top/Bottom ─── -->
+      <div class="section-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+        <!-- Risk Alerts -->
+        <div class="chart-card">
+          <div class="chart-card__header"><h2 class="chart-card__title">⚠️ KPI ที่ต้องเฝ้าระวัง</h2></div>
+          <div id="directorRiskAlerts" style="max-height:280px;overflow-y:auto;"></div>
+        </div>
+        <!-- Top KPIs -->
+        <div class="chart-card">
+          <div class="chart-card__header"><h2 class="chart-card__title">🏆 KPI ดีเด่น</h2></div>
+          <div id="directorTopKpis"></div>
+        </div>
+        <!-- Bottom KPIs -->
+        <div class="chart-card">
+          <div class="chart-card__header"><h2 class="chart-card__title">📋 KPI ต้องพัฒนา</h2></div>
+          <div id="directorBottomKpis"></div>
+        </div>
+      </div>
+
+      <!-- ─── KPI Detail Table ─── -->
+      <div class="table-card">
+        <div class="table-card__header">
+          <h2 class="table-card__title">📋 รายละเอียดตัวชี้วัด</h2>
+        </div>
+        <div class="responsive-table">
+          <table class="kpi-table">
+            <thead>
+              <tr>
+                <th>ชื่อตัวชี้วัด (KPI)</th>
+                <th class="text-right">เป้าหมาย</th>
+                <th class="text-right">ผลงานจริง</th>
+                <th>คะแนน</th>
+                <th class="text-center">สถานะ</th>
+                <th class="text-center">แนวโน้ม</th>
+              </tr>
+            </thead>
+            <tbody id="directorKpiTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <div class="footer-credit">
+          พัฒนาโดย <b>นักวิชาการคอมพิวเตอร์</b> เทศบาลนคร
+        </div>
+        <div class="footer-slogan">
+          "Transforming Municipal Data into Intelligent Decisions"
+        </div>
+        <div style="font-size: 0.65rem; color: var(--clr-neutral-300); margin-top: var(--space-sm);">
+          v3.0 Updated: 11/03/2026 14:48
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/scoring.js"></script>
+  <script src="js/ai-engine.js"></script>
+  <script src="js/data-platform.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/director.js"></script>
+</body>
+</html>

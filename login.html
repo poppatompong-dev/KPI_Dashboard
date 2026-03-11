@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เข้าสู่ระบบ — Admin Back-Office</title>
+  <meta name="description" content="เข้าสู่ระบบจัดการ Admin Back-Office สำหรับระบบ KPI เทศบาลนคร">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      background: linear-gradient(135deg, var(--clr-primary-900) 0%, #1e1b4b 50%, #0f172a 100%);
+    }
+    .login-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      color: var(--clr-white);
+    }
+    .login-left__brand {
+      width: 4rem; height: 4rem;
+      background: linear-gradient(135deg, var(--clr-primary-500), var(--clr-accent-500));
+      border-radius: var(--radius-lg);
+      display: grid; place-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .login-left__brand svg { width: 2.25rem; height: 2.25rem; color: #fff; }
+    .login-left h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .login-left p { color: rgb(255 255 255/.45); font-size: 0.85rem; margin-bottom: 2rem; }
+    .login-right {
+      width: 460px;
+      background: var(--clr-white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem;
+    }
+    .login-right h2 { font-size: 1.4rem; font-weight: 700; color: var(--clr-neutral-900); margin-bottom: 0.25rem; }
+    .login-right .subtitle { font-size: 0.85rem; color: var(--clr-neutral-400); margin-bottom: 2rem; }
+    .login-error {
+      background: var(--clr-danger-100);
+      color: var(--clr-danger-700);
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .login-error.visible { display: block; }
+    .login-footer {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--clr-neutral-200);
+    }
+    .login-footer p { font-size: 0.7rem; color: var(--clr-neutral-400); text-align: center; margin-bottom: 0.5rem; }
+    .demo-creds {
+      background: var(--clr-neutral-50);
+      border: 1px solid var(--clr-neutral-200);
+      border-radius: var(--radius-md);
+      padding: 0.7rem 1rem;
+      font-size: 0.7rem;
+      color: var(--clr-neutral-500);
+    }
+    .demo-creds strong { color: var(--clr-neutral-700); }
+    @media (max-width: 768px) {
+      .login-page { flex-direction: column; }
+      .login-left { padding: 2rem 1.5rem 1rem; }
+      .login-right { width: 100%; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body style="display:block;">
+
+  <div class="login-page">
+    <!-- Left Panel -->
+    <div class="login-left">
+      <div class="login-left__brand">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      </div>
+      <h1>Admin Back-Office</h1>
+      <p>ระบบจัดการข้อมูล KPI เทศบาลนคร</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:320px;width:100%;">
+        <div style="background:rgb(255 255 255/.06);border:1px solid rgb(255 255 255/.1);border-radius:var(--radius-md);padding:1rem;text-align:center;">
+          <div style="font-size:1.5rem;margin-bottom:0.3rem;">👥</div>
+          <div style="font-size:0.75rem;color:rgb(255 255 255/.6);">จัดการผู้ใช้</div>
+        </div>
+        <div style="background:rgb(255 255 255/.06);border:1px solid rgb(255 255 255/.1);border-radius:var(--radius-md);padding:1rem;text-align:center;">
+          <div style="font-size:1.5rem;margin-bottom:0.3rem;">📊</div>
+          <div style="font-size:0.75rem;color:rgb(255 255 255/.6);">จัดการ KPI</div>
+        </div>
+        <div style="background:rgb(255 255 255/.06);border:1px solid rgb(255 255 255/.1);border-radius:var(--radius-md);padding:1rem;text-align:center;">
+          <div style="font-size:1.5rem;margin-bottom:0.3rem;">📜</div>
+          <div style="font-size:0.75rem;color:rgb(255 255 255/.6);">Audit Logs</div>
+        </div>
+        <div style="background:rgb(255 255 255/.06);border:1px solid rgb(255 255 255/.1);border-radius:var(--radius-md);padding:1rem;text-align:center;">
+          <div style="font-size:1.5rem;margin-bottom:0.3rem;">🖥️</div>
+          <div style="font-size:0.75rem;color:rgb(255 255 255/.6);">Monitoring</div>
+        </div>
+      </div>
+
+      <div style="margin-top:2rem;display:flex;align-items:center;gap:0.4rem;">
+        <div class="pulse-dot"></div>
+        <span style="font-size:0.7rem;color:rgb(255 255 255/.35);">Smart City KPI Platform v3.0</span>
+      </div>
+    </div>
+
+    <!-- Right Panel: Login Form -->
+    <div class="login-right">
+      <h2>เข้าสู่ระบบ</h2>
+      <p class="subtitle">ใช้ชื่อผู้ใช้และรหัสผ่านของคุณ</p>
+
+      <div class="login-error" id="loginError"></div>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label class="form-label" for="username">ชื่อผู้ใช้</label>
+          <input class="form-input" type="text" id="username" placeholder="กรอกชื่อผู้ใช้" autofocus required style="font-size:0.95rem;padding:0.7rem;">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">รหัสผ่าน</label>
+          <input class="form-input" type="password" id="password" placeholder="กรอกรหัสผ่าน" required style="font-size:0.95rem;padding:0.7rem;">
+        </div>
+        <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;padding:0.75rem;font-size:0.95rem;margin-top:var(--space-sm);">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+          เข้าสู่ระบบ
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p>สำหรับทดสอบระบบ — ใช้บัญชีด้านล่าง</p>
+        <div class="demo-creds">
+          <div style="margin-bottom:0.3rem;"><strong>Admin:</strong> admin / @dm!nP0p</div>
+          <div style="margin-bottom:0.3rem;"><strong>Executive:</strong> executive / Exec@2569</div>
+          <div style="margin-bottom:0.3rem;"><strong>Director:</strong> director_eng / Dir@2569</div>
+          <div style="margin-bottom:0.3rem;"><strong>Staff:</strong> staff_finance / Staff@2569</div>
+          <div><strong>Auditor:</strong> auditor / Audit@2569</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/audit.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const errorEl = document.getElementById('loginError');
+
+      if (!username || !password) {
+        errorEl.textContent = 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน';
+        errorEl.classList.add('visible');
+        return;
+      }
+
+      const result = Auth.login(username, password);
+      if (result.success) {
+        window.location.href = 'backoffice.html';
+      } else {
+        errorEl.textContent = result.error;
+        errorEl.classList.add('visible');
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+      }
+    });
+
+    // If already logged in, redirect
+    if (Auth.isLoggedIn()) {
+      window.location.href = 'backoffice.html';
+    }
+  </script>
+</body>
+</html>
